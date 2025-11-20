@@ -1,14 +1,14 @@
 {
-  "name": "odin-restaurant",
+  "name": "taskmaster",
   "version": "1.0.0",
   "description": "The Restaurant Page project from The Odin Project ",
-  "homepage": "https://github.com/exelinguy/odin-restaurant",
+  "homepage": "https://github.com/exelinguy/taskmaster",
   "bugs": {
-    "url": "https://github.com/exelinguy/odin-restaurant/issues"
+    "url": "https://github.com/exelinguy/taskmaster/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/exelinguy/odin-restaurant.git"
+    "url": "git+https://github.com/exelinguy/taskmaster.git"
   },
   "license": "ISC",
   "author": "Harshvardhan Gupta",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "css-loader": "^7.1.2",
+    "date-fns": "^4.1.0",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.5",
     "style-loader": "^4.0.0",

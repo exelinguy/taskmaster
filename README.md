@@ -4,10 +4,10 @@
 
 **Goal:** Get the tools ready and the file structure in place.
 
-1. [ ] **Initialize Project:** Run `npm init` to create `package.json`.
-2. [ ] **Install Webpack:** Install `webpack` and `webpack-cli` as dev dependencies.
-3. [ ] **Install Dependencies:** Install `date-fns` for date manipulation.
-4. [ ] **File Structure:** Create `src` and `dist` directories.
+1. [x] **Initialize Project:** Run `npm init` to create `package.json`.
+2. [x] **Install Webpack:** Install `webpack` and `webpack-cli` as dev dependencies.
+3. [x] **Install Dependencies:** Install `date-fns` for date manipulation.
+4. [x] **File Structure:** Create `src` and `dist` directories.
    - Create `src/index.html` (Skeleton HTML).
    - Create `src/index.js` (Entry point).
    - Create `src/style.css` (Basic styling).
