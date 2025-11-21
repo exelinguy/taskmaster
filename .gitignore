@@ -1,4 +1,7 @@
-# Include dist folder as per instructions
+# vscode files
+.vscode/
+
+# dist folder as per the odin project instructions
 dist/
 
 # Logs
