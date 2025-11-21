@@ -1,33 +1,53 @@
 {
-  "name": "taskmaster",
-  "version": "1.0.0",
-  "description": "The Restaurant Page project from The Odin Project ",
-  "homepage": "https://github.com/exelinguy/taskmaster",
-  "bugs": {
-    "url": "https://github.com/exelinguy/taskmaster/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/exelinguy/taskmaster.git"
-  },
-  "license": "ISC",
-  "author": "Harshvardhan Gupta",
-  "main": "index.js",
-  "scripts": {
-    "build": "webpack --config webpack.prod.js",
-    "dev": "webpack serve --open --config webpack.dev.js",
-    "deploy": "git subtree push --prefix dist origin gh-pages",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "css-loader": "^7.1.2",
-    "date-fns": "^4.1.0",
-    "html-loader": "^5.1.0",
-    "html-webpack-plugin": "^5.6.5",
-    "style-loader": "^4.0.0",
-    "webpack": "^5.103.0",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2",
-    "webpack-merge": "^6.0.1"
-  }
+    "name": "taskmaster",
+    "version": "1.0.0",
+    "description": "The Restaurant Page project from The Odin Project ",
+    "homepage": "https://github.com/exelinguy/taskmaster",
+    "bugs": {
+        "url": "https://github.com/exelinguy/taskmaster/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/exelinguy/taskmaster.git"
+    },
+    "license": "ISC",
+    "author": "Harshvardhan Gupta",
+    "main": "index.js",
+    "scripts": {
+        "build": "webpack --config webpack.prod.js",
+        "dev": "webpack serve --open --config webpack.dev.js",
+        "deploy": "git subtree push --prefix dist origin gh-pages",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^20.1.0",
+        "@eslint/css": "^0.14.1",
+        "@eslint/js": "^9.39.1",
+        "@eslint/json": "^0.14.0",
+        "@eslint/markdown": "^7.5.1",
+        "commitlint-config-gitmoji": "^2.3.1",
+        "css-loader": "^7.1.2",
+        "date-fns": "^4.1.0",
+        "eslint": "^9.39.1",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-prettier": "^5.5.4",
+        "globals": "^16.5.0",
+        "html-loader": "^5.1.0",
+        "html-webpack-plugin": "^5.6.5",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.2.7",
+        "prettier": "3.6.2",
+        "style-loader": "^4.0.0",
+        "webpack": "^5.103.0",
+        "webpack-cli": "^6.0.1",
+        "webpack-dev-server": "^5.2.2",
+        "webpack-merge": "^6.0.1"
+    },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ]
+    }
 }

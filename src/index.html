@@ -1,57 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Valhalla Feast | The Odin Restaurant</title>
-    <!-- Importing Google Fonts for that Mythological feel -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Fauna+One&display=swap"
-      rel="stylesheet"
-    />
-    <!-- FIX: Adding inline style to prevent the white flash (FOUC - Flash of Unstyled Content) -->
-    <style>
-      body {
-        background-color: #2e3440; /* Match --bg-color from style.css */
-        visibility: hidden;
-        opacity: 0;
-        transition: opacity 0.5s;
-      }
-      body.loaded {
-        visibility: visible;
-        opacity: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1 class="logo">
-        <img
-          src="./assets/odin-icon.svg"
-          alt="VALHALLA FEAST"
-          height="150px"
-          width="150px"
-        />VALHALLA FEAST
-      </h1>
-      <nav>
-        <!-- Using specific IDs helps us grab these easily in JS -->
-        <button id="home-btn" class="nav-btn active">Home</button>
-        <button id="menu-btn" class="nav-btn">Menu</button>
-        <button id="reservations-btn" class="nav-btn">Reservations</button>
-      </nav>
-    </header>
-
-    <div id="content"></div>
-
-    <footer>
-      <p>
-        <a href="https://www.theodinproject.com/" title="The Odin Project"
-          >The Odin Project</a
-        >
-        &copy; 2025
-      </p>
-    </footer>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="test"></div>
+    </body>
 </html>
