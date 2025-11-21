@@ -39,6 +39,12 @@ export default class Project {
         return this._description
     }
 
+    //Update function for changing project details
+    updateDetails(newDetails) {
+        const keys = Object.keys(newDetails)
+        keys.forEach((key) => (this[key] = newDetails[key]))
+    }
+
     /**
      Adding Todos
      */
@@ -58,11 +64,5 @@ export default class Project {
      */
     get todos() {
         return this._todos
-    }
-
-    //Update function for changing project details
-    updateDetails(newDetails) {
-        const keys = Object.keys(newDetails)
-        keys.forEach((key) => (this[key] = newDetails[key]))
     }
 }
