@@ -38,10 +38,12 @@ export default class Todo {
     /**
      Checklist Methods 
      */
+
     /**
-     Add subtask 
+     Create and Add subtask 
      */
-    addSubtask(subtask) {
+    addSubtask(name, isComplete = false) {
+        const subtask = { name, isComplete }
         this.checklist.push(subtask)
     }
 
