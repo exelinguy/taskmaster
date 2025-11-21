@@ -1,8 +1,8 @@
 export default class Project {
     constructor(name, description) {
         this.id = crypto.randomUUID()
-        this._name = name
-        this._description = description
+        this.name = name
+        this.description = description
         this._todos = []
     }
 

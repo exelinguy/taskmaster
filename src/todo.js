@@ -3,6 +3,7 @@ import { formatISO } from 'date-fns'
 export default class Todo {
     _checklist = []
     _isComplete = false
+    _priority = 'medium'
 
     constructor(title, description, dueDate, priority) {
         this.id = crypto.randomUUID()
