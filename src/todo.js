@@ -1,8 +1,8 @@
 import { formatISO } from 'date-fns'
 
 export default class Todo {
-    checklist = []
-    isComplete = false
+    _checklist = []
+    _isComplete = false
 
     constructor(title, description, dueDate, priority) {
         this.id = crypto.randomUUID()
@@ -21,8 +21,15 @@ export default class Todo {
     }
 
     /**
-     Toggle completion for todos
+     Setter & Toggle completion for todos
      */
+    set isComplete(value = false) {
+        if (typeof value === 'boolean') {
+            this._isComplete = value
+        } else {
+            this._isComplete = false
+        }
+    }
     toggleCompletion() {
         this.isComplete = !this.isComplete
     }
@@ -44,25 +51,40 @@ export default class Todo {
      */
     addSubtask(name, isComplete = false) {
         const subtask = { name, isComplete }
-        this.checklist.push(subtask)
+        this._checklist.push(subtask)
     }
 
     /**
      Delete subtask 
      */
     deleteSubtask(subtask) {
-        this.checklist = this.checklist.filter((task) => task !== subtask)
+        this._checklist = this._checklist.filter((task) => task !== subtask)
     }
 
     /**
      Toggle Completion of subtask 
      */
     toggleSubtaskCompletion(subtaskName) {
-        const subtask = this.checklist.find((task) => task.name === subtaskName)
+        const subtask = this._checklist.find(
+            (task) => task.name === subtaskName
+        )
         if (subtask) {
             subtask.isComplete = !subtask.isComplete
             return true
         }
         return false
+    }
+
+    //Getter (for DOM controller) and setter (for rehydration) methods for checklist
+    get checklist() {
+        return this._checklist
+    }
+
+    set checklist(newArray) {
+        if (Array.isArray(newArray)) {
+            this._checklist = newArray
+        } else {
+            this._checklist = []
+        }
     }
 }
