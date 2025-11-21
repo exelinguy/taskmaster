@@ -20,7 +20,18 @@
 2. [x] **`project.js`:** Create the `Project` class (with `id`, `name`, and an array of `todos`).
 3. [ ] **`appLogic.js` (The Manager):**
     - Manage the master array of Projects.
-    - Methods: `addProject`, `getProjects`, `addTodoToProject`, `removeTodo`, `updateTodoDetails`, `updateProjectDetails`.
+    * **Project Management** 📁
+        - `addProject(name, description)`
+        - `getProjects()`
+        - `removeProject(projectId)`
+        - `updateProjectDetails(projectId, newDetails)`
+    * **Todo Coordination** 📝
+        - `addTodo(projectId, title, description, dueDate, priority)`
+        - `removeTodo(todoId, projectId)`
+        - `updateTodoDetails(todoId, projectId, newDetails)`
+    * **Data Persistence** 💾
+        - `initializeAppData()`
+        - `saveAppData()`
     - **Test:** Use `console.log` in `index.js` to verify data structure before building the UI.
 
 ## Phase 3: The Interface Layer (The "View") 🖼️
