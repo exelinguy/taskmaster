@@ -28,7 +28,6 @@
         "@eslint/markdown": "^7.5.1",
         "commitlint-config-gitmoji": "^2.3.1",
         "css-loader": "^7.1.2",
-        "date-fns": "^4.1.0",
         "eslint": "^9.39.1",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-prettier": "^5.5.4",
@@ -49,5 +48,8 @@
             "eslint --fix",
             "prettier --write"
         ]
+    },
+    "dependencies": {
+        "date-fns": "^4.1.0"
     }
 }
