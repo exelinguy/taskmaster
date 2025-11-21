@@ -1,4 +1,7 @@
 export default class Project {
+    _name = 'Project'
+    _description = ''
+
     constructor(name, description) {
         this.id = crypto.randomUUID()
         this.name = name
