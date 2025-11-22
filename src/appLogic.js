@@ -15,12 +15,20 @@ const appLogic = (() => {
     }
 
     function addProject(name, description) {
-        const project = new Project(name, description)
-        projects.push(project)
+        try {
+            const project = new Project(name, description)
+            projects.push(project)
+            saveAppData()
+            return true
+        } catch (error) {
+            console.error('Failed to add project:', error.message)
+            return false
+        }
     }
 
     function removeProject(projectId) {
         projects = projects.filter((project) => project.id !== projectId)
+        saveAppData()
     }
 
     function updateProjectDetails(projectId, newDetails) {
@@ -31,6 +39,7 @@ const appLogic = (() => {
         }
         try {
             project.updateDetails(newDetails)
+            saveAppData()
             return true
         } catch (error) {
             console.error('Failed to update project:', error.message)
@@ -49,6 +58,7 @@ const appLogic = (() => {
         }
         const todo = new Todo(title, description, dueDate, priority)
         project.addTodo(todo)
+        saveAppData()
         return true
     }
 
@@ -61,6 +71,7 @@ const appLogic = (() => {
             return false
         }
         project.deleteTodo(todoId)
+        saveAppData()
         return true
     }
 
@@ -79,6 +90,7 @@ const appLogic = (() => {
         }
         try {
             todo.updateDetails(newDetails)
+            saveAppData()
             return true
         } catch (error) {
             console.error('Failed to update todo:', error.message)
