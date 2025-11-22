@@ -18,7 +18,7 @@
 
 1. [x] **`todo.js`:** Create the `Todo` class (with `id`, `title`, `description`, `dueDate`, `priority`, etc.).
 2. [x] **`project.js`:** Create the `Project` class (with `id`, `name`, and an array of `todos`).
-3. [ ] **`appLogic.js` (The Manager):**
+3. [x] **`appLogic.js` (The Manager):**
     - Manage the master array of Projects.
     * **Project Management** 📁
         - `addProject(name, description)`
