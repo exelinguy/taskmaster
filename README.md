@@ -38,7 +38,7 @@
 
 **Goal:** Create a visual layout, define rendering functions, and establish a clear separation of concerns between the DOM and the `AppLogic` Module. All rendering and event binding happens here; all data mutation must be delegated to `appLogic`.
 
-[ ]### 1. HTML Structure Update (`src/index.html`) 🏗️
+### [ ] 1. HTML Structure Update (`src/index.html`) 🏗️
 
 We need to create the main containers that Webpack will load and where `domController.js` will inject all the dynamic content.
 
@@ -49,7 +49,7 @@ We need to create the main containers that Webpack will load and where `domContr
 | **Main Content**       | `#main-content`  | Container for the header of the active project and the list of its todo tasks.                  |
 | **Modal Overlay**      | `#modal-overlay` | A separate, hidden container that will display forms (Add/Edit Todo) over the main content.     |
 
-[ ]### 2. DOM Controller Functions (`src/domController.js`) 🧠
+### [ ] 2. DOM Controller Functions (`src/domController.js`) 🧠
 
 This module exports functions that handle every aspect of the UI. It relies entirely on the `appLogic` module for data.
 
@@ -68,7 +68,8 @@ This module exports functions that handle every aspect of the UI. It relies enti
 
 1. [ ] **Event Listeners:** Set up event handlers on dynamically generated buttons (Add, Delete, Edit, Select Project).
 2. [ ] **Orchestration:** Event handlers call Logic methods and then call DOM rendering methods to refresh the UI.
-       [ ] ### Event Handling and Orchestration 🔌
+
+    ### [ ] Event Handling and Orchestration 🔌
 
     All events attached to the DOM must call the Manager methods to change the underlying data, ensuring the view never modifies the Model directly.
 
