@@ -29,6 +29,7 @@ const appLogic = (() => {
     function removeProject(projectId) {
         projects = projects.filter((project) => project.id !== projectId)
         saveAppData()
+        return true
     }
 
     function updateProjectDetails(projectId, newDetails) {
