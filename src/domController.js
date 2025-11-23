@@ -1,6 +1,6 @@
 import appLogic from './appLogic'
 
-const domController = (() => {
+const DOMController = (() => {
     //Starting view
     function initializeInterface() {
         appLogic.initializeAppData()
@@ -141,4 +141,4 @@ const domController = (() => {
     }
 })()
 
-export default domController
+export default DOMController

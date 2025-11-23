@@ -1,12 +1,21 @@
 import appLogic from './appLogic'
-// import domController from './domController'
+import DOMController from './domController' // Renamed for clarity, assuming DOMController is the export name
 import './style.css'
+
 function init() {
-    // 1. ⚠️ TEMPORARY: Expose AppLogic for console testing
+    // ⚠️ TEMPORARY: Expose core modules for console testing
     window.App = appLogic
+    window.DOM = DOMController
+
+    // 1. Initialize data (ensures default project is created)
     appLogic.initializeAppData()
-    const projects = appLogic.getProjects()
-    console.log({ projects })
-    console.log('App initialised.')
+
+    // 2. Start the Interface rendering sequence
+    DOMController.initializeInterface()
+
+    console.log(
+        'App initialized. Check window.App (Logic) and window.DOM (Rendering) in the console for testing.'
+    )
 }
+
 init()

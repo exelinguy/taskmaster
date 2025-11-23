@@ -74,6 +74,7 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 h1 {
@@ -281,7 +282,7 @@ button {
     }
 }
 /* 7. Modals & Utilities [cite: 127-143] */
-.modal-overlay {
+#modal-overlay {
     background-color: rgba(15, 23, 42, 0.4);
     backdrop-filter: blur(4px);
     position: fixed;
