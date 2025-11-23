@@ -40,7 +40,7 @@
 
 ### 1. HTML Structure Update (`src/index.html`) 🏗️
 
-- [ ] We need to create the main containers that Webpack will load and where `domController.js` will inject all the dynamic content.
+- [x] We need to create the main containers that Webpack will load and where `domController.js` will inject all the dynamic content.
 
 | Component              | Element ID       | Purpose                                                                                         |
 | :--------------------- | :--------------- | :---------------------------------------------------------------------------------------------- |

@@ -3,9 +3,42 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>TaskMaster</title>
     </head>
     <body>
-        <div class="test"></div>
+        <header id="mobile-header">
+            <button id="menu-toggle" aria-label="Toggle Menu">☰</button>
+            <h1>TaskMaster</h1>
+            <button id="mobile-add-btn" aria-label="Add Task">+</button>
+        </header>
+
+        <div id="app-container">
+            <nav id="sidebar">
+                <div class="logo-area">TaskMaster</div>
+                <div class="nav-section">
+                    <ul id="system-lists">
+                        <li data-id="inbox" class="active">Inbox</li>
+                        <li data-id="today">Today</li>
+                        <li data-id="upcoming">Upcoming</li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h3>PROJECTS</h3>
+                    <ul id="projects-list"></ul>
+                    <button id="add-project-btn">+ Add Project</button>
+                </div>
+            </nav>
+
+            <main id="main-content">
+                <header id="content-header"></header>
+
+                <div id="todo-list-container"></div>
+            </main>
+        </div>
+
+        <div id="modal-overlay" class="hidden">
+            <div id="modal-card"></div>
+        </div>
     </body>
 </html>
