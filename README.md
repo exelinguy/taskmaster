@@ -51,7 +51,7 @@
 
 ### 2. DOM Controller Functions (`src/domController.js`) 🧠
 
-- [ ] This module exports functions that handle every aspect of the UI. It relies entirely on the `appLogic` module for data.
+- [x] This module exports functions that handle every aspect of the UI. It relies entirely on the `appLogic` module for data.
 
 | Category           | Function Name                  | Responsibility                                                                                                                                              |
 | :----------------- | :----------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
