@@ -13,6 +13,8 @@ function init() {
     // 2. Start the Interface rendering sequence
     DOMController.initializeInterface()
 
+    DOMController.bindStaticAppListeners()
+
     console.log(
         'App initialized. Check window.App (Logic) and window.DOM (Rendering) in the console for testing.'
     )

@@ -119,6 +119,7 @@ const appLogic = (() => {
     //Export the public interface for other modules to use.
     return {
         getProjects,
+        findProject,
         addProject,
         removeProject,
         updateProjectDetails,
