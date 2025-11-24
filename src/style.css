@@ -309,3 +309,30 @@ button {
 .hidden {
     display: none !important;
 }
+
+.priority-tag {
+    /* Base style for the tag */
+    font: var(--font-label);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* HIGH Priority [Red] */
+.priority-high {
+    color: #ef4444; /* High Priority Red Text */
+    background-color: #fee2e2; /* Light Red Background */
+}
+
+/* MEDIUM Priority (Normal/Blue) */
+.priority-medium {
+    color: #3b82f6; /* Normal Priority Blue Text */
+    background-color: #dbeafe; /* Light Blue Background */
+}
+
+/* LOW Priority [Green] (Using a typical green from Tailwind/Design Systems) */
+.priority-low {
+    color: #10b981;
+    background-color: #d1fae5;
+}
