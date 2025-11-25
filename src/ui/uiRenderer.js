@@ -1,5 +1,6 @@
 import appLogic from '../appLogic'
 import eventHandler from './eventHandler'
+import { format } from 'date-fns'
 
 const uiRender = (() => {
     function renderProjectsSidebar() {
@@ -63,7 +64,7 @@ const uiRender = (() => {
                     </div>
                     <div class='todo-meta'>
                         <span class='priority-tag priority-${todo._priority}'>${todo._priority}</span>
-                        <span class='due-date'>${todo._dueDate}</span>
+                        <span class='due-date'>${format(todo.dueDate, 'MMM dd')}</span>
                     </div>
                 </div>
             `
