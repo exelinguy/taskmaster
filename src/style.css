@@ -191,6 +191,15 @@ button {
     gap: var(--space-lg);
 }
 
+#content-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+#add-task-desktop {
+    width: fit-content;
+}
+
 /* 5. Components */
 
 .nav-section {
@@ -283,6 +292,14 @@ button {
     gap: var(--space-xs);
 }
 
+.todo-checkbox {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
 .checkbox-label {
     font: var(--font-small);
     color: var(--color-text-secondary);
