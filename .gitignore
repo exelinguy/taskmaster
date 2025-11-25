@@ -3,6 +3,7 @@
 
 # dist folder as per the odin project instructions
 dist/
+.eslintignore
 
 # Logs
 logs
