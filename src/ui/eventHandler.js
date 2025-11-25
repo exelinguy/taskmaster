@@ -66,6 +66,16 @@ const eventHandler = (() => {
                 modalManager.showProjectForm
             )
         }
+
+        // 6. Close Sidebar on Main Content Click (Mobile)
+        if (mainContent && sidebar) {
+            mainContent.addEventListener('click', () => {
+                // If the sidebar is currently open (on mobile), close it.
+                if (sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open')
+                }
+            })
+        }
     }
 
     /*
