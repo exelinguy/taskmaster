@@ -84,7 +84,7 @@
 
 **Goal:** Save data and refine the UI.
 
-1. [ ] **`storage.js`:**
+1. [x] **`storage.js`:**
     - `saveToLocal(data)`: Serializes the Logic data to JSON.
     - `loadFromLocal()`: Parses JSON and **rehydrates** the data back into class instances.
 2. [ ] **Date Integration:** Use `date-fns` to format due dates nicely.

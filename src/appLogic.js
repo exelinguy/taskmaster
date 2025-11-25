@@ -1,4 +1,5 @@
 import Project from './project'
+import storageManager from './storage'
 import Todo from './todo'
 const appLogic = (() => {
     let projects = []
@@ -101,18 +102,27 @@ const appLogic = (() => {
 
     //Data Persistence methods (placeholders for now)
     function initializeAppData() {
-        if (projects.length === 0) {
+        const loadProjects = storageManager.loadFromLocal()
+        if (loadProjects.length > 0)
+            try {
+                projects = loadProjects
+                console.log('AppLogic: Loaded saved data.')
+            } catch (error) {
+                console.error('Failed to load stored data:', error.message)
+            }
+        else {
             const project = new Project(
                 'Default Project',
-                'Enter descripton...'
+                'Enter description...'
             )
             projects.push(project)
             console.log('AppLogic: Initializing default project.')
+            saveAppData()
         }
     }
 
     function saveAppData() {
-        console.log('Save operaton triggered.')
+        storageManager.saveToLocal(projects)
         return true
     }
 
