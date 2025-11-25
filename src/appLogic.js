@@ -19,7 +19,7 @@ const appLogic = (() => {
             const project = new Project(name, description)
             projects.push(project)
             saveAppData()
-            return true
+            return project
         } catch (error) {
             console.error('Failed to add project:', error.message)
             return false

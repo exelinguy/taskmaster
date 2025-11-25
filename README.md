@@ -66,8 +66,8 @@
 
 **Goal:** Connect the Logic to the Interface.
 
-1. [ ] **Event Listeners:** Set up event handlers on dynamically generated buttons (Add, Delete, Edit, Select Project).
-2. [ ] **Orchestration:** Event handlers call Logic methods and then call DOM rendering methods to refresh the UI.
+1. [x] **Event Listeners:** Set up event handlers on dynamically generated buttons (Add, Delete, Edit, Select Project).
+2. [x] **Orchestration:** Event handlers call Logic methods and then call DOM rendering methods to refresh the UI.
 
     ### Event Handling and Orchestration 🔌
 

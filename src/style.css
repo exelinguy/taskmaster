@@ -231,6 +231,7 @@ button {
     box-shadow: var(--shadow-md);
 }
 /* Primary Button [cite: 62] */
+
 .btn-primary {
     background-color: var(--color-brand-primary);
     color: #ffffff;

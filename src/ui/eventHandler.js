@@ -1,5 +1,4 @@
 import appLogic from '../appLogic'
-import DOMController from '../domController'
 import uiRender from './uiRenderer'
 import modalManager from './modalManager'
 
@@ -25,24 +24,24 @@ const eventHandler = (() => {
             }
         })
 
-        // 3. System Navigation
-        const systemLists = document.getElementById('system-lists')
-        if (systemLists) {
-            systemLists.addEventListener('click', (e) => {
-                const systemItem = e.target.closest('li[data-id]')
-                if (systemItem) {
-                    systemLists.querySelectorAll('.active').forEach((item) => {
-                        item.classList.remove('active')
-                    })
-                    systemItem.classList.add('active')
+        // // 3. System Navigation
+        // const systemLists = document.getElementById('system-lists')
+        // if (systemLists) {
+        //     systemLists.addEventListener('click', (e) => {
+        //         const systemItem = e.target.closest('li[data-id]')
+        //         if (systemItem) {
+        //             systemLists.querySelectorAll('.active').forEach((item) => {
+        //                 item.classList.remove('active')
+        //             })
+        //             systemItem.classList.add('active')
 
-                    if (systemItem.dataset.id === 'inbox') {
-                        const defaultProject = appLogic.getProjects()[0]
-                        uiRender.renderActiveProject(defaultProject)
-                    }
-                }
-            })
-        }
+        //             if (systemItem.dataset.id === 'inbox') {
+        //                 const defaultProject = appLogic.getProjects()[0]
+        //                 uiRender.renderActiveProject(defaultProject)
+        //             }
+        //         }
+        //     })
+        // }
 
         // 4. Mobile Add Task Button
         const addTaskMobileBtn = document.getElementById('mobile-add-btn')
@@ -50,7 +49,7 @@ const eventHandler = (() => {
         const handleAddTask = () => {
             const activeProjectId = mainContent.dataset.activeProjectId
             if (activeProjectId) {
-                uiRender.showTodoForm(activeProjectId)
+                modalManager.showTodoForm(activeProjectId)
             } else {
                 console.error('Cannot open form: No active project ID found.')
             }
@@ -76,7 +75,7 @@ const eventHandler = (() => {
         const addTaskDesktopBtn = document.getElementById('add-task-desktop')
         if (addTaskDesktopBtn) {
             addTaskDesktopBtn.addEventListener('click', () => {
-                uiRender.showTodoForm(projectId)
+                modalManager.showTodoForm(projectId)
             })
         }
     }
@@ -93,11 +92,13 @@ const eventHandler = (() => {
                     'project-description'
                 ).value
 
-                const success = appLogic.addProject(name, description)
+                const newProject = appLogic.addProject(name, description)
 
-                if (success) {
+                if (newProject) {
                     modalManager.closeAllModals()
-                    DOMController.initializeInterface()
+
+                    uiRender.renderProjectsSidebar() // Refresh sidebar
+                    uiRender.renderActiveProject(newProject) // Switch to new project
                 }
             })
         }
@@ -116,7 +117,7 @@ const eventHandler = (() => {
                     'input[name="priority"]:checked'
                 ).value
 
-                const success = appLogic.addTodo(
+                const newTodo = appLogic.addTodo(
                     projectId,
                     title,
                     description,
@@ -124,7 +125,7 @@ const eventHandler = (() => {
                     priority
                 )
 
-                if (success) {
+                if (newTodo) {
                     modalManager.closeAllModals()
                     const activeProject = appLogic.findProject(projectId)
                     if (activeProject) {
