@@ -21,9 +21,14 @@ const modalManager = (() => {
                 <div class="form-group priority-group">
                     <label>Priority:</label>
                     <div class="priority-options">
-                        <label class="priority-label"><input type="radio" name="priority" value="low" checked> Low</label>
-                        <label class="priority-label"><input type="radio" name="priority" value="medium"> Normal</label>
-                        <label class="priority-label"><input type="radio" name="priority" value="high"> High</label>
+                        <input type="radio" id="priority-low" name="priority" value="low" checked>
+                        <label for="priority-low" class="priority-label">Low</label>
+                        
+                        <input type="radio" id="priority-medium" name="priority" value="medium">
+                        <label for="priority-medium" class="priority-label">Normal</label>
+                        
+                        <input type="radio" id="priority-high" name="priority" value="high">
+                        <label for="priority-high" class="priority-label">High</label>
                     </div>
                 </div>
                 <div class="form-actions">

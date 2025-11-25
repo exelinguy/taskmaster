@@ -158,6 +158,24 @@ button {
     box-shadow: var(--shadow-lg);
 }
 
+#add-project-btn {
+    background: var(--color-brand-primary);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    padding: var(--space-sm) var(--space-sm);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+    margin-top: var(--space-md);
+}
+
+#add-project-btn:hover {
+    background-color: var(--color-bg-surface-hover);
+    color: var(--color-brand-primary);
+    border-color: var(--color-brand-light);
+}
+
 .logo-area {
     display: none;
 }
@@ -180,7 +198,7 @@ button {
 }
 .nav-section h3 {
     font: var(--font-label);
-    color: var(--color-text-tertiary);
+    color: var(--color-text-secondary);
     margin-bottom: var(--space-sm);
     padding-left: var(--space-sm);
     text-transform: uppercase;
@@ -198,6 +216,7 @@ button {
     transition: all 0.2s;
     list-style: none;
     margin-bottom: 2px;
+    font-weight: 500;
 }
 
 .nav-item:hover {
@@ -219,16 +238,54 @@ button {
     border: 1px solid var(--color-border);
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: var(--space-md);
     transition:
         transform 0.2s,
         box-shadow 0.2s;
     cursor: pointer;
+    line-height: 1.5;
+    margin-top: 1rem;
 }
 
 .todo-card:hover {
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
+}
+
+.todo-info-group {
+    /* Main area containing text and meta-data */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+/* Strikethrough effect on completion class */
+.todo-card.completed .todo-title-text,
+.todo-card.completed .todo-description-text {
+    text-decoration: line-through;
+    color: var(--color-text-tertiary);
+}
+
+/* 2. Gap between priority & dueDate + layout fix */
+.todo-meta {
+    display: flex;
+    gap: var(--space-md); /* Increased gap for spacing */
+    align-items: center;
+    font: var(--font-small);
+}
+
+.todo-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.checkbox-label {
+    font: var(--font-small);
+    color: var(--color-text-secondary);
 }
 /* Primary Button [cite: 62] */
 
@@ -243,7 +300,8 @@ button {
     transition: opacity 0.2s ease;
     display: inline-flex;
     align-items: center;
-    gap: var(--space-xs);
+    gap: var(--space-sm);
+    margin-left: 0.8rem;
 }
 
 .btn-primary:hover {
@@ -336,4 +394,91 @@ button {
 .priority-low {
     color: #10b981;
     background-color: #d1fae5;
+}
+
+.input-field {
+    width: 100%;
+    padding: var(--space-sm);
+    margin: var(--space-sm) 0 var(--space-md) 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family); /* Use Inter font */
+    font-size: 16px;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-app);
+    transition: border-color 0.2s;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--color-brand-primary);
+    box-shadow: 0 0 0 1px var(--color-brand-primary);
+}
+
+.form-group label {
+    font: var(--font-small);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+/* d) Priority radio group (replicate tags) */
+.priority-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+}
+
+.priority-options .priority-label {
+    display: flex;
+    align-items: center;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+/* Hide native radio button */
+.priority-options input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+}
+
+/* Apply checked state styles based on priority tags */
+
+.priority-options input[value='low']:checked ~ label[for='priority-low'] {
+    color: #10b981;
+    background-color: #d1fae5;
+    border-color: #10b981;
+}
+
+.priority-options input[value='medium']:checked ~ label[for='priority-medium'] {
+    color: #3b82f6;
+    background-color: #dbeafe;
+    border-color: #3b82f6;
+}
+
+.priority-options input[value='high']:checked ~ label[for='priority-high'] {
+    color: #ef4444;
+    background-color: #fee2e2;
+    border-color: #ef4444;
+}
+
+/* Cancel button pastel red */
+.btn-cancel {
+    background: #fee2e2;
+    color: #ef4444;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 1rem;
+}
+
+.btn-cancel:hover {
+    background: #f99e9e;
 }

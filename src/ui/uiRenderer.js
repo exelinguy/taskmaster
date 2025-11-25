@@ -54,20 +54,24 @@ const uiRender = (() => {
         todos.forEach((todo) => {
             const completionClass = todo._isComplete ? 'completed' : ''
             const cardHTML = `
-                <div class='todo-card ${completionClass}' data-todo-id='${todo.id}'>
-                    <div class='todo-main-content'>
-                        <input type='checkbox' class='todo-checkbox' data-id='${todo.id}' ${todo._isComplete ? 'checked' : ''}>
-                        <div class='todo-text'>
-                            <h4>${todo.title}</h4>
-                            <p class='text-secondary'>${todo.description}</p>
-                        </div>
-                    </div>
-                    <div class='todo-meta'>
-                        <span class='priority-tag priority-${todo._priority}'>${todo._priority}</span>
-                        <span class='due-date'>${format(todo.dueDate, 'MMM dd')}</span>
-                    </div>
-                </div>
-            `
+    <div class='todo-card ${completionClass}' data-todo-id='${todo.id}'>
+        <div class='todo-info-group'>
+            <div class='todo-text'>
+                <h4 class='todo-title-text'>${todo.title}</h4>
+                <p class='text-secondary todo-description-text'>${todo.description || ''}</p>
+            </div>
+            <div class='todo-meta'>
+                <span class='priority-tag priority-${todo._priority}'>${todo._priority}</span>
+                <span class='due-date'>${format(new Date(todo.dueDate), 'MMM dd')}</span>
+            </div>
+        </div>
+        
+        <div class='todo-checkbox-group'>
+            <label for='todo-checkbox-${todo.id}' class='checkbox-label'>Done</label>
+            <input type='checkbox' id='todo-checkbox-${todo.id}' class='todo-checkbox' data-id='${todo.id}' ${todo._isComplete ? 'checked' : ''}>
+        </div>
+    </div>
+`
             todoListContainer.innerHTML += cardHTML
         })
     }
