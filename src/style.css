@@ -193,6 +193,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
+    position: sticky;
 }
 #add-task-desktop {
     width: fit-content;
