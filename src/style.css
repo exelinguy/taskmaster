@@ -185,7 +185,6 @@ button {
     flex: 1;
     background-color: var(--color-bg-app);
     padding: var(--space-md);
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
@@ -498,4 +497,13 @@ button {
 
 .btn-cancel:hover {
     background: #f99e9e;
+}
+
+#todo-list-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-bottom: var(--space-lg);
 }
