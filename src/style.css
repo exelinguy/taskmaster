@@ -194,6 +194,7 @@ button {
     flex-direction: column;
     gap: var(--space-lg);
     position: sticky;
+    top: 0;
 }
 #add-task-desktop {
     width: fit-content;
