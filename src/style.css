@@ -99,6 +99,8 @@ button {
     border-bottom: 1px solid var(--color-border);
     flex-shrink: 0;
     position: sticky;
+    position: -webkit-sticky;
+    top: 0;
 }
 
 /* Logo Styling (Mobile) */
@@ -193,8 +195,6 @@ button {
     display: flex;
     flex-direction: column;
     gap: var(--space-lg);
-    position: sticky;
-    top: 0;
 }
 #add-task-desktop {
     width: fit-content;
@@ -268,6 +268,14 @@ button {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    min-width: 0;
+}
+
+.todo-title-text,
+.todo-description-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    min-width: 0; /* Ensure this nested flex item also respects shrinking */
 }
 
 /* Strikethrough effect on completion class */
