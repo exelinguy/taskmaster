@@ -80,13 +80,6 @@ const eventHandler = (() => {
         // 7. Toggle theme button
         const themeToggles = document.querySelectorAll('.theme-switch-input')
 
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark-mode')
-            themeToggles.forEach((toggle) => {
-                toggle.checked = true
-            })
-        }
-
         const handleThemeChange = (isChecked) => {
             if (isChecked) {
                 document.body.classList.add('dark-mode')
@@ -391,7 +384,7 @@ const eventHandler = (() => {
         }
 
         // --- Edit Logic (Delegation on Modal) ---
-        modalCard.addEventListener('click', (e) => {
+        modalCard.click((e) => {
             // 1. Priority Cycle
             if (e.target.classList.contains('priority-tag')) {
                 const currentPriority = e.target.textContent.trim()
@@ -415,10 +408,10 @@ const eventHandler = (() => {
             }
 
             // 3. Delete in Modal
-            if (e.target.classList.contains('btn-delete')) {
+            if (e.target.closest('.btn-delete')) {
                 if (confirm('Delete this task?')) {
                     appLogic.removeTodo(todoId, projectId)
-                    refreshUI() // Will close modal
+                    refreshUI()
                 }
             }
 
