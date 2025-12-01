@@ -63,8 +63,15 @@ const eventHandler = (() => {
             })
         }
 
-        // 7. Toggle theme button
+        // 6. Toggle theme button
         const themeToggles = document.querySelectorAll('.theme-switch-input')
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode')
+            themeToggles.forEach((toggle) => {
+                toggle.checked = true
+            })
+        }
 
         const handleThemeChange = (isChecked) => {
             if (isChecked) {
@@ -370,7 +377,7 @@ const eventHandler = (() => {
         }
 
         // --- Edit Logic (Delegation on Modal) ---
-        modalCard.onclick((e) => {
+        modalCard.onclick = (e) => {
             // 1. Priority Cycle
             if (e.target.classList.contains('priority-tag')) {
                 const currentPriority = e.target.textContent.trim()
@@ -466,7 +473,7 @@ const eventHandler = (() => {
                         input.blur()
                 })
             }
-        })
+        }
     }
     function bindDynamicListeners() {
         bindFormSubmissions()
