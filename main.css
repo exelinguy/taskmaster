@@ -98,7 +98,7 @@ button {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1;
 }
 
 /* Logo Styling (Mobile) */
@@ -217,7 +217,7 @@ input:checked + .slider:before {
     border-right: 1px solid var(--color-border);
     transform: translateX(-100%);
     transition: transform 0.3s ease;
-    z-index: 50;
+    z-index: 3;
     padding: var(--space-md);
     display: flex;
     flex-direction: column;
@@ -570,6 +570,10 @@ textarea.edit-input {
     background-color: var(--color-bg-surface-hover);
 }
 
+.sidebar-footer {
+    display: none;
+}
+
 /* 6. Desktop Styles (Min-width Override) */
 @media (min-width: 768px) {
     #mobile-header {
@@ -601,6 +605,13 @@ textarea.edit-input {
     #main-content {
         padding: var(--space-xl);
     }
+
+    .sidebar-footer {
+        display: block; /* Make it visible */
+        margin-top: auto;
+        padding-top: 2rem;
+        border-top: 1px solid var(--color-border);
+    }
 }
 /* 7. Modals & Utilities [cite: 127-143] */
 #modal-overlay {
@@ -614,7 +625,7 @@ textarea.edit-input {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 4;
 }
 
 #modal-card {
