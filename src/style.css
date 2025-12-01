@@ -44,19 +44,16 @@
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
-/* Dark Mode Overrides [cite: 9-39] */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-bg-app: #0f172a;
-        --color-bg-surface: #1e293b;
-        --color-bg-surface-hover: #334155;
-        --color-text-primary: #f1f5f9;
-        --color-text-secondary: #94a3b8;
-        --color-text-tertiary: #475569;
-        --color-brand-primary: #2dd4bf;
-        --color-brand-light: #134e4a;
-        --color-border: #334155;
-    }
+body.dark-mode {
+    --color-bg-app: #0f172a;
+    --color-bg-surface: #1e293b;
+    --color-bg-surface-hover: #334155;
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #94a3b8;
+    --color-text-tertiary: #475569;
+    --color-brand-primary: #2dd4bf;
+    --color-brand-light: #134e4a;
+    --color-border: #334155;
 }
 
 /* 3. Global Resets */
@@ -111,6 +108,77 @@ button {
     font-weight: 700;
     margin: 0;
     color: var(--color-brand-primary);
+}
+
+/* --- Theme Toggle Switch --- */
+
+/* 1. The Container */
+.theme-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    margin-right: 1rem; /* Space from the title */
+}
+
+/* 2. Hide the default checkbox */
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 3. The Slider (Background) */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-text-tertiary); /* Default (Light) Color */
+    transition: 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    font-size: 14px;
+    user-select: none;
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+/* 4. The Knob (Circle) */
+.slider:before {
+    position: absolute;
+    content: '';
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+    z-index: 2; /* Sit on top of icons */
+}
+
+/* 5. Checked State (Dark Mode) */
+input:checked + .slider {
+    background-color: var(--color-brand-primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(30px);
+}
+
+/* Icons positioning */
+.icon-sun {
+    margin-left: 2px; /* Adjust as needed */
+}
+.icon-moon {
+    margin-right: 2px; /* Adjust as needed */
 }
 
 #menu-toggle {

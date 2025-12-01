@@ -76,6 +76,36 @@ const eventHandler = (() => {
                 }
             })
         }
+
+        // 7. Toggle theme button
+        const themeToggles = document.querySelectorAll('.theme-switch-input')
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode')
+            themeToggles.forEach((toggle) => {
+                toggle.checked = true
+            })
+        }
+
+        const handleThemeChange = (isChecked) => {
+            if (isChecked) {
+                document.body.classList.add('dark-mode')
+                localStorage.setItem('theme', 'dark')
+            } else {
+                document.body.classList.remove('dark-mode')
+                localStorage.setItem('theme', 'light')
+            }
+
+            themeToggles.forEach((toggle) => {
+                toggle.checked = isChecked
+            })
+        }
+
+        themeToggles.forEach((toggle) => {
+            toggle.addEventListener('change', (e) => {
+                handleThemeChange(e.target.checked)
+            })
+        })
     }
 
     /*
