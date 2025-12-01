@@ -101,6 +101,7 @@ button {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
+    z-index: 100;
 }
 
 /* Logo Styling (Mobile) */
