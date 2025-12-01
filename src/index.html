@@ -6,6 +6,16 @@
         <title>TaskMaster</title>
     </head>
     <body>
+        <script>
+            // Check storage immediately
+            const savedTheme = localStorage.getItem('theme')
+
+            // If dark, add class BEFORE the page renders
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode')
+            }
+        </script>
+
         <header id="mobile-header">
             <button id="menu-toggle" aria-label="Toggle Menu">☰</button>
             <h1>TaskMaster</h1>
