@@ -190,15 +190,6 @@ input:checked + .slider:before {
     padding: 0;
 }
 
-#mobile-add-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--color-brand-primary);
-    padding: 0;
-}
-
 /* App Container */
 #app-container {
     display: flex;
@@ -265,9 +256,6 @@ input:checked + .slider:before {
     flex-direction: column;
     gap: var(--space-lg);
 }
-#add-task-desktop {
-    width: fit-content;
-}
 
 /* 5. Components */
 
@@ -311,13 +299,17 @@ input:checked + .slider:before {
 /* Project Header Styling */
 
 #add-task-desktop {
-    display: none;
+    display: inline-flex;
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: auto;
+    font-size: 0.9rem;
 }
 
 .project-header-top {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--space-md);
 }
 
@@ -326,6 +318,8 @@ input:checked + .slider:before {
     align-items: center;
     gap: var(--space-sm);
     flex-wrap: nowrap;
+    flex: 1;
+    min-width: 0;
 }
 
 .project-name {
@@ -333,8 +327,9 @@ input:checked + .slider:before {
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     line-height: 1.2;
+    margin: 0;
 }
 
 .project-description {

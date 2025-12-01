@@ -43,22 +43,7 @@ const eventHandler = (() => {
         //     })
         // }
 
-        // 4. Mobile Add Task Button
-        const addTaskMobileBtn = document.getElementById('mobile-add-btn')
-        const mainContent = document.getElementById('main-content')
-        const handleAddTask = () => {
-            const activeProjectId = mainContent.dataset.activeProjectId
-            if (activeProjectId) {
-                modalManager.showTodoForm(activeProjectId)
-            } else {
-                console.error('Cannot open form: No active project ID found.')
-            }
-        }
-        if (addTaskMobileBtn) {
-            addTaskMobileBtn.addEventListener('click', handleAddTask)
-        }
-
-        // 5. Add Project Static Button
+        // 4. Add Project Static Button
         const addProjectBtn = document.getElementById('add-project-btn')
         if (addProjectBtn) {
             addProjectBtn.addEventListener(
@@ -67,7 +52,8 @@ const eventHandler = (() => {
             )
         }
 
-        // 6. Close Sidebar on Main Content Click (Mobile)
+        // 5. Close Sidebar on Main Content Click (Mobile)
+        const mainContent = document.getElementById('main-content')
         if (mainContent && sidebar) {
             mainContent.addEventListener('click', () => {
                 // If the sidebar is currently open (on mobile), close it.
@@ -384,7 +370,7 @@ const eventHandler = (() => {
         }
 
         // --- Edit Logic (Delegation on Modal) ---
-        modalCard.click((e) => {
+        modalCard.onclick((e) => {
             // 1. Priority Cycle
             if (e.target.classList.contains('priority-tag')) {
                 const currentPriority = e.target.textContent.trim()
