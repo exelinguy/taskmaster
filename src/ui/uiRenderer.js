@@ -22,8 +22,6 @@ const uiRender = (() => {
         const contentHeader = document.getElementById('content-header')
         const todoListContainer = document.getElementById('todo-list-container')
         const mainContent = document.getElementById('main-content')
-
-        // CRITICAL FIX: Set the active project ID for event handlers to use
         if (mainContent) {
             mainContent.dataset.activeProjectId = project.id
         }
@@ -34,17 +32,26 @@ const uiRender = (() => {
         const taskCount = project.todos.filter((t) => !t._isComplete).length
 
         contentHeader.innerHTML = `
-            <div class="content-header-text">
-                <h1>${project.name}</h1> 
-                <p class="text-secondary">${taskCount} tasks remaining</p>
+            <div class="project-header-top">
+                <div class="project-title-group">
+                    <h1 class="project-name" data-key="name">${project.name}</h1>
+                    <div class="project-actions">
+                        <button class="btn-icon edit-project-btn" aria-label="Edit Project">✏️</button>
+                        <button class="btn-icon delete-project-btn" aria-label="Delete Project">🗑️</button>
+                    </div>
+                </div>
+                <button class="btn-primary" id="add-task-desktop">+ Add Task</button>
             </div>
-            <button class="btn-primary" id="add-task-desktop">
-                + Add Task
-            </button>
+            
+            <p class="project-description text-secondary" data-key="description">
+                ${project.description || 'No description provided.'}
+            </p>
+            <p class="task-count text-secondary">${taskCount} tasks remaining</p>
         `
         renderTodos(project.todos)
         // Bind dynamic button immediately after rendering
         eventHandler.bindAddTaskDesktopButton(project.id)
+        eventHandler.bindProjectHeaderEvents(project.id)
     }
 
     function renderTodos(todos) {
@@ -72,8 +79,8 @@ const uiRender = (() => {
                 <input type='checkbox' id='todo-checkbox-${todo.id}' class='todo-checkbox' data-id='${todo.id}' ${todo._isComplete ? 'checked' : ''}>
             </div>
             <button class='btn-delete' data-id='${todo.id}' aria-label='Delete Task'>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="20px" fill="#64748b">
-                <title>Delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="20px" width="20px">
+                <title>Delete</title><path fill="#94a3b8" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
             </button>
         </div>
     </div>

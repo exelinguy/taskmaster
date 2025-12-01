@@ -238,7 +238,55 @@ button {
     color: var(--color-brand-primary);
     font-weight: 600;
 }
-/* Todo Card [cite: 216] */
+
+/* Project Header Styling */
+.project-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-md);
+}
+
+.project-title-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.project-name {
+    margin: 0;
+    line-height: 1.2;
+}
+
+.project-description {
+    margin-top: -10px; /* Pull description closer to title */
+    max-width: 800px;
+}
+
+/* Icon Buttons (Pencil/Trash) */
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    opacity: 1;
+    background-color: var(--color-bg-surface-hover);
+    transform: scale(1.1);
+}
+
+.delete-project-btn:hover {
+    background-color: #fee2e2; /* Red background for danger action */
+}
+
+/* Todo Card*/
 .todo-card {
     background-color: var(--color-bg-surface);
     padding: var(--space-md);
@@ -359,7 +407,7 @@ button {
 }
 
 .btn-delete:hover {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Edelete-empty%3C/title%3E height='20px'%3Cpath fill='%2364748b' d='M20.37,8.91L19.37,10.64L7.24,3.64L8.24,1.91L11.28,3.66L12.64,3.29L16.97,5.79L17.34,7.16L20.37,8.91M6,19V7H11.07L18,11V19A2,2 0 0,1 16,21H8A2,2 0 0,1 6,19Z' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Edelete-empty%3C/title%3E height='20px' width='20px'%3Cpath fill='%2394a3b8' d='M20.37,8.91L19.37,10.64L7.24,3.64L8.24,1.91L11.28,3.66L12.64,3.29L16.97,5.79L17.34,7.16L20.37,8.91M6,19V7H11.07L18,11V19A2,2 0 0,1 16,21H8A2,2 0 0,1 6,19Z' /%3E%3C/svg%3E");
     background-color: #fee2e2;
 }
 

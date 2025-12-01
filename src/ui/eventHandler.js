@@ -293,6 +293,128 @@ const eventHandler = (() => {
             })
         }
     }
+
+    function bindProjectHeaderEvents(projectId) {
+        const header = document.getElementById('content-header')
+        if (!header) return
+
+        // --- 1. EDIT FUNCTIONALITY ---
+        const editBtn = header.querySelector('.edit-project-btn')
+
+        if (editBtn) {
+            editBtn.addEventListener('click', () => {
+                const nameEl = header.querySelector('.project-name')
+                const descEl = header.querySelector('.project-description')
+
+                // Prevent multiple clicks
+                if (nameEl.querySelector('input')) return
+
+                // Convert Name to Input
+                const currentName = nameEl.innerText
+                const nameInput = document.createElement('input')
+                nameInput.type = 'text'
+                nameInput.value = currentName
+                nameInput.classList.add('edit-input')
+                nameInput.style.fontSize = 'var(--font-h1)' // Match H1 size
+                nameEl.innerHTML = ''
+                nameEl.appendChild(nameInput)
+
+                // Convert Description to Textarea
+                const currentDesc =
+                    descEl.innerText === 'No description provided.'
+                        ? ''
+                        : descEl.innerText
+                const descInput = document.createElement('textarea')
+                descInput.value = currentDesc
+                descInput.classList.add('edit-input')
+                descEl.innerHTML = ''
+                descEl.appendChild(descInput)
+
+                nameInput.focus()
+
+                // Save Function
+                const saveChanges = () => {
+                    const newName = nameInput.value.trim()
+                    const newDesc = descInput.value.trim()
+
+                    if (newName && newName.length >= 3) {
+                        appLogic.updateProjectDetails(projectId, {
+                            name: newName,
+                            description: newDesc,
+                        })
+
+                        // Re-render to show changes (and exit edit mode)
+                        const updatedProject = appLogic.findProject(projectId)
+                        uiRender.renderProjectsSidebar() // Update sidebar name
+                        uiRender.renderActiveProject(updatedProject)
+                    } else {
+                        alert(
+                            'Project name must be at least 3 characters long.'
+                        )
+                        nameInput.focus()
+                    }
+                }
+
+                const handleBlur = (e) => {
+                    // Only save if we are clicking OUTSIDE of our two inputs
+                    if (
+                        e.relatedTarget === nameInput ||
+                        e.relatedTarget === descInput
+                    ) {
+                        return
+                    }
+                    saveChanges()
+                }
+
+                nameInput.addEventListener('blur', handleBlur)
+                descInput.addEventListener('blur', handleBlur)
+
+                // Allow saving with Enter on the name field
+                nameInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        // Blur triggers the save, so we just blur manually
+                        nameInput.blur()
+                    }
+                })
+            })
+        }
+
+        // --- 2. DELETE FUNCTIONALITY ---
+        const deleteBtn = header.querySelector('.delete-project-btn')
+
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', () => {
+                const project = appLogic.findProject(projectId)
+                const taskCount = project.todos.length
+
+                // Prevent deleting the very last project
+                if (appLogic.getProjects().length === 1) {
+                    alert('You cannot delete the only project!')
+                    return
+                }
+
+                let confirmed = false
+                if (taskCount > 0) {
+                    confirmed = confirm(
+                        `This project has ${taskCount} task(s). Are you sure you want to delete it?`
+                    )
+                } else {
+                    confirmed = confirm('Delete this project?')
+                }
+
+                if (confirmed) {
+                    appLogic.removeProject(projectId)
+                    uiRender.renderProjectsSidebar()
+
+                    // Switch to the first available project
+                    const remainingProjects = appLogic.getProjects()
+                    if (remainingProjects.length > 0) {
+                        uiRender.renderActiveProject(remainingProjects[0])
+                    }
+                }
+            })
+        }
+    }
     function bindDynamicListeners() {
         bindFormSubmissions()
         bindTodoCardEvents()
@@ -304,6 +426,7 @@ const eventHandler = (() => {
         bindDynamicListeners,
         bindAddTaskDesktopButton,
         bindFormSubmissions,
+        bindProjectHeaderEvents,
     }
 })()
 
