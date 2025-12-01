@@ -150,7 +150,7 @@ const eventHandler = (() => {
         const todoListContainer = document.getElementById('todo-list-container')
         const mainContent = document.getElementById('main-content')
 
-        if (!todoListContainer || !mainContent) return
+        if (!todoListContainer) return
 
         todoListContainer.addEventListener('click', (e) => {
             const projectId = mainContent.dataset.activeProjectId
@@ -158,7 +158,7 @@ const eventHandler = (() => {
             if (!card) return
             const todoId = card.dataset.todoId
 
-            // 1. Handle Checkbox (Existing Logic)
+            // A. Checkbox (Quick Action - Keep on Card)
             if (e.target.type === 'checkbox') {
                 const newCompletionState = e.target.checked
                 appLogic.updateTodoDetails(todoId, projectId, {
@@ -169,9 +169,9 @@ const eventHandler = (() => {
                 return
             }
 
-            // 2. Handle Delete Button 🗑️
+            // B. Delete Button (Quick Action - Keep on Card)
             if (e.target.closest('.btn-delete')) {
-                if (confirm('Are you sure you want to delete this task?')) {
+                if (confirm('Delete this task?')) {
                     appLogic.removeTodo(todoId, projectId)
                     const activeProject = appLogic.findProject(projectId)
                     uiRender.renderActiveProject(activeProject)
@@ -179,97 +179,14 @@ const eventHandler = (() => {
                 return
             }
 
-            // 3. Handle Priority Cycle 🔄
-            if (e.target.classList.contains('priority-tag')) {
-                const currentPriority = e.target.textContent.trim()
-                const priorityMap = {
-                    low: 'medium',
-                    medium: 'high',
-                    high: 'low',
-                }
-                const newPriority = priorityMap[currentPriority] || 'low'
-
-                appLogic.updateTodoDetails(todoId, projectId, {
-                    priority: newPriority,
-                })
+            // C. Click on Content -> OPEN MODAL 🔍
+            // If we clicked the info group (text/tags) but NOT the checkbox/delete actions
+            if (e.target.closest('.todo-info-group')) {
                 const activeProject = appLogic.findProject(projectId)
-                uiRender.renderActiveProject(activeProject)
-                return
-            }
-
-            // 4. Handle Date Edit 📅
-            if (e.target.classList.contains('due-date')) {
-                const currentRawDate = e.target.dataset.rawDate // 2025-11-26T...
-                const dateValue = currentRawDate
-                    ? currentRawDate.split('T')[0]
-                    : ''
-
-                const dateInput = document.createElement('input')
-                dateInput.type = 'date'
-                dateInput.value = dateValue
-                dateInput.classList.add('edit-input')
-
-                // Replace span with input
-                e.target.replaceWith(dateInput)
-                dateInput.focus()
-
-                // Save on blur
-                dateInput.addEventListener('blur', () => {
-                    if (dateInput.value) {
-                        appLogic.updateTodoDetails(todoId, projectId, {
-                            dueDate: dateInput.value,
-                        })
-                    }
-                    const activeProject = appLogic.findProject(projectId)
-                    uiRender.renderActiveProject(activeProject)
-                })
-                return
-            }
-
-            // 5. Handle Title/Description Edit (In-Place) 📝
-            if (
-                e.target.classList.contains('todo-title-text') ||
-                e.target.classList.contains('todo-description-text')
-            ) {
-                const field = e.target.dataset.key // 'title' or 'description'
-                const currentText = e.target.innerText
-
-                // Create Input Element
-                const input =
-                    field === 'description'
-                        ? document.createElement('textarea')
-                        : document.createElement('input')
-
-                if (field !== 'description') input.type = 'text'
-
-                input.value = currentText
-                input.classList.add('edit-input')
-
-                // Replace text with input
-                e.target.replaceWith(input)
-                input.focus()
-
-                // Define save logic
-                const save = () => {
-                    const newValue = input.value.trim()
-                    if (newValue && newValue !== currentText) {
-                        appLogic.updateTodoDetails(todoId, projectId, {
-                            [field]: newValue, // Dynamic key: title or description
-                        })
-                    }
-                    const activeProject = appLogic.findProject(projectId)
-                    uiRender.renderActiveProject(activeProject)
+                const todo = activeProject.todos.find((t) => t.id === todoId)
+                if (todo) {
+                    modalManager.showTodoDetails(todo)
                 }
-
-                // Save on blur (clicking away)
-                input.addEventListener('blur', save)
-
-                // Save on Enter (only for title inputs, allow newlines in description)
-                input.addEventListener('keydown', (k) => {
-                    if (k.key === 'Enter' && field !== 'description') {
-                        input.blur() // Triggers the blur event above
-                    }
-                })
             }
         })
     }
@@ -415,6 +332,133 @@ const eventHandler = (() => {
             })
         }
     }
+
+    function bindModalDetailListeners(todoId) {
+        const modalCard = document.getElementById('modal-card')
+        const mainContent = document.getElementById('main-content')
+        const projectId = mainContent.dataset.activeProjectId
+
+        // Close button logic
+        const closeBtn = modalCard.querySelector('.close-modal-btn')
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () =>
+                modalManager.closeAllModals()
+            )
+        }
+
+        // Generic function to refresh UI after an update
+        const refreshUI = () => {
+            const activeProject = appLogic.findProject(projectId)
+            // 1. Refresh background list
+            uiRender.renderActiveProject(activeProject)
+            // 2. Refresh current modal (to show updated state/formatting)
+            const updatedTodo = activeProject.todos.find((t) => t.id === todoId)
+            if (updatedTodo) {
+                modalManager.showTodoDetails(updatedTodo)
+            } else {
+                modalManager.closeAllModals() // Todo was deleted
+            }
+        }
+
+        // --- Edit Logic (Delegation on Modal) ---
+        modalCard.addEventListener('click', (e) => {
+            // 1. Priority Cycle
+            if (e.target.classList.contains('priority-tag')) {
+                const currentPriority = e.target.textContent.trim()
+                const priorityMap = {
+                    low: 'medium',
+                    medium: 'high',
+                    high: 'low',
+                }
+                appLogic.updateTodoDetails(todoId, projectId, {
+                    priority: priorityMap[currentPriority],
+                })
+                refreshUI()
+            }
+
+            // 2. Checkbox in Modal
+            if (e.target.type === 'checkbox') {
+                appLogic.updateTodoDetails(todoId, projectId, {
+                    isComplete: e.target.checked,
+                })
+                refreshUI()
+            }
+
+            // 3. Delete in Modal
+            if (e.target.classList.contains('btn-delete')) {
+                if (confirm('Delete this task?')) {
+                    appLogic.removeTodo(todoId, projectId)
+                    refreshUI() // Will close modal
+                }
+            }
+
+            // 4. Date Edit
+            if (e.target.classList.contains('due-date')) {
+                const currentRawDate = e.target.dataset.rawDate
+                const dateValue = currentRawDate
+                    ? currentRawDate.split('T')[0]
+                    : ''
+
+                const dateInput = document.createElement('input')
+                dateInput.type = 'date'
+                dateInput.value = dateValue
+                dateInput.classList.add('edit-input')
+
+                e.target.replaceWith(dateInput)
+                dateInput.focus()
+
+                dateInput.addEventListener('blur', () => {
+                    if (dateInput.value) {
+                        appLogic.updateTodoDetails(todoId, projectId, {
+                            dueDate: dateInput.value,
+                        })
+                        refreshUI()
+                    } else {
+                        refreshUI() // Revert if empty/cancelled
+                    }
+                })
+            }
+
+            // 5. Title / Description Edit
+            if (
+                e.target.classList.contains('todo-title-text') ||
+                e.target.classList.contains('todo-description-text')
+            ) {
+                const field = e.target.dataset.key
+                const currentText = e.target.innerText
+
+                const input =
+                    field === 'description'
+                        ? document.createElement('textarea')
+                        : document.createElement('input')
+                if (field !== 'description') input.type = 'text'
+
+                input.value =
+                    currentText === 'Add a description...' ? '' : currentText
+                input.classList.add('edit-input')
+                if (field === 'title') input.style.fontSize = '1.5rem' // Match header size
+
+                e.target.replaceWith(input)
+                input.focus()
+
+                const save = () => {
+                    const newValue = input.value.trim()
+                    if (newValue && newValue !== currentText) {
+                        appLogic.updateTodoDetails(todoId, projectId, {
+                            [field]: newValue,
+                        })
+                    }
+                    refreshUI()
+                }
+
+                input.addEventListener('blur', save)
+                input.addEventListener('keydown', (k) => {
+                    if (k.key === 'Enter' && field !== 'description')
+                        input.blur()
+                })
+            }
+        })
+    }
     function bindDynamicListeners() {
         bindFormSubmissions()
         bindTodoCardEvents()
@@ -427,6 +471,7 @@ const eventHandler = (() => {
         bindAddTaskDesktopButton,
         bindFormSubmissions,
         bindProjectHeaderEvents,
+        bindModalDetailListeners,
     }
 })()
 

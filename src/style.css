@@ -140,7 +140,7 @@ button {
 
 /* Sidebar (Mobile: Off-canvas) */
 #sidebar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
@@ -289,15 +289,19 @@ button {
 
 /* Todo Card*/
 .todo-card {
-    background-color: var(--color-bg-surface);
-    padding: var(--space-md);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--color-border);
+    /* 1. Define maximum height based on viewport height */
+    max-height: 20vh;
+    overflow: hidden; /* Hide overflow content */
+    /* Keep existing flex/gap styles */
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: var(--space-md);
+    padding: var(--space-md);
+    background-color: var(--color-bg-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
     transition:
         transform 0.2s,
         box-shadow 0.2s;
@@ -306,25 +310,50 @@ button {
     margin-top: 1rem;
 }
 
-.todo-card:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md);
-}
-
 .todo-info-group {
-    /* Main area containing text and meta-data */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
     min-width: 0;
+    /* Ensure click events on this area are captured */
+    cursor: pointer;
 }
 
-.todo-title-text,
-.todo-description-text {
+/* 2. Truncate Title and Description */
+.todo-title-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Show only 1 line */
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
     word-break: break-word;
-    overflow-wrap: break-word;
-    min-width: 0; /* Ensure this nested flex item also respects shrinking */
+}
+
+.todo-description-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Show max 2 lines */
+    -webkit-box-orient: vertical;
+    line-clamp: 1;
+    box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+/* Modal Specific Styles for Full View */
+#modal-card .todo-title-text,
+#modal-card .todo-description-text {
+    display: block; /* Remove truncation in modal */
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+}
+
+/* Ensure edit inputs in modal look good */
+#modal-card .edit-input {
+    font-size: 1rem;
+    padding: var(--space-sm);
 }
 
 /* Strikethrough effect on completion class */
@@ -332,6 +361,30 @@ button {
 .todo-card.completed .todo-description-text {
     text-decoration: line-through;
     color: var(--color-text-tertiary);
+}
+
+#modal-card .todo-meta {
+    display: flex;
+    gap: var(--space-md); /* Increased gap for spacing */
+    align-items: center;
+    font: var(--font-small);
+}
+
+#modal-card .priority-tag {
+    /* Base style for the tag */
+    font: var(--font-label);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    white-space: nowrap;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none; /* Safari, Chrome */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Standard syntax */
 }
 
 /* 2. Gap between priority & dueDate + layout fix */
@@ -408,11 +461,8 @@ button {
 }
 
 .btn-delete:hover {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Edelete-empty%3C/title%3E height='20px' width='20px'%3Cpath fill='%2394a3b8' d='M20.37,8.91L19.37,10.64L7.24,3.64L8.24,1.91L11.28,3.66L12.64,3.29L16.97,5.79L17.34,7.16L20.37,8.91M6,19V7H11.07L18,11V19A2,2 0 0,1 16,21H8A2,2 0 0,1 6,19Z' /%3E%3C/svg%3E");
     background-color: #fee2e2;
 }
-
-/* --- In-Place Edit Styles --- */
 
 /* Style the inputs that appear when clicking text */
 .edit-input {
