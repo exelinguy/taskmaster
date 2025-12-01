@@ -333,6 +333,76 @@ button {
     opacity: 0.9;
 }
 
+.todo-actions-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+/* Delete Button Styling */
+.btn-delete {
+    display: flex;
+    background: none;
+    border: none;
+    font: var(--font-small);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    opacity: 0.5;
+    transition:
+        opacity 0.2s,
+        transform 0.1s;
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Edelete-empty%3C/title%3E height='20px'%3Cpath fill='%2364748b' d='M20.37,8.91L19.37,10.64L7.24,3.64L8.24,1.91L11.28,3.66L12.64,3.29L16.97,5.79L17.34,7.16L20.37,8.91M6,19V7H11.07L18,11V19A2,2 0 0,1 16,21H8A2,2 0 0,1 6,19Z' /%3E%3C/svg%3E");
+    background-color: #fee2e2;
+}
+
+/* --- In-Place Edit Styles --- */
+
+/* Style the inputs that appear when clicking text */
+.edit-input {
+    font-family: var(--font-family);
+    font-size: inherit;
+    font-weight: inherit;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-app);
+    border: 1px solid var(--color-brand-primary);
+    border-radius: var(--radius-sm);
+    padding: 2px 4px;
+    width: 100%;
+    box-shadow: 0 0 0 2px var(--color-brand-light);
+    outline: none;
+}
+
+/* Description textarea specific style */
+textarea.edit-input {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Cursor indicators for clickable elements */
+.todo-title-text,
+.todo-description-text,
+.priority-tag,
+.due-date {
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-radius: var(--radius-sm);
+    padding: 2px;
+}
+
+.todo-title-text:hover,
+.todo-description-text:hover,
+.due-date:hover {
+    background-color: var(--color-bg-surface-hover);
+}
+
 /* 6. Desktop Styles (Min-width Override) */
 @media (min-width: 768px) {
     #mobile-header {
@@ -401,6 +471,14 @@ button {
     border-radius: var(--radius-sm);
     text-transform: uppercase;
     white-space: nowrap;
+    width: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none; /* Safari, Chrome */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Standard syntax */
 }
 
 /* HIGH Priority [Red] */

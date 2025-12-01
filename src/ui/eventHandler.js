@@ -148,29 +148,130 @@ const eventHandler = (() => {
 
     function bindTodoCardEvents() {
         const todoListContainer = document.getElementById('todo-list-container')
-        const mainContentArea = document.getElementById('main-content')
-        if (todoListContainer && mainContentArea) {
-            todoListContainer.addEventListener('click', (e) => {
-                if (e.target.type === 'checkbox') {
-                    const todoId = e.target.dataset.id
-                    const projectId = mainContentArea.dataset.activeProjectId
-                    const newCompletionState = e.target.checked
+        const mainContent = document.getElementById('main-content')
 
-                    const success = appLogic.updateTodoDetails(
-                        todoId,
-                        projectId,
-                        { isComplete: newCompletionState }
-                    )
+        if (!todoListContainer || !mainContent) return
 
-                    if (success) {
-                        const activeProject = appLogic.findProject(projectId)
-                        if (activeProject) {
-                            uiRender.renderActiveProject(activeProject)
-                        }
-                    }
+        todoListContainer.addEventListener('click', (e) => {
+            const projectId = mainContent.dataset.activeProjectId
+            const card = e.target.closest('.todo-card')
+            if (!card) return
+            const todoId = card.dataset.todoId
+
+            // 1. Handle Checkbox (Existing Logic)
+            if (e.target.type === 'checkbox') {
+                const newCompletionState = e.target.checked
+                appLogic.updateTodoDetails(todoId, projectId, {
+                    isComplete: newCompletionState,
+                })
+                const activeProject = appLogic.findProject(projectId)
+                uiRender.renderActiveProject(activeProject)
+                return
+            }
+
+            // 2. Handle Delete Button 🗑️
+            if (e.target.closest('.btn-delete')) {
+                if (confirm('Are you sure you want to delete this task?')) {
+                    appLogic.removeTodo(todoId, projectId)
+                    const activeProject = appLogic.findProject(projectId)
+                    uiRender.renderActiveProject(activeProject)
                 }
-            })
-        }
+                return
+            }
+
+            // 3. Handle Priority Cycle 🔄
+            if (e.target.classList.contains('priority-tag')) {
+                const currentPriority = e.target.textContent.trim()
+                const priorityMap = {
+                    low: 'medium',
+                    medium: 'high',
+                    high: 'low',
+                }
+                const newPriority = priorityMap[currentPriority] || 'low'
+
+                appLogic.updateTodoDetails(todoId, projectId, {
+                    priority: newPriority,
+                })
+                const activeProject = appLogic.findProject(projectId)
+                uiRender.renderActiveProject(activeProject)
+                return
+            }
+
+            // 4. Handle Date Edit 📅
+            if (e.target.classList.contains('due-date')) {
+                const currentRawDate = e.target.dataset.rawDate // 2025-11-26T...
+                const dateValue = currentRawDate
+                    ? currentRawDate.split('T')[0]
+                    : ''
+
+                const dateInput = document.createElement('input')
+                dateInput.type = 'date'
+                dateInput.value = dateValue
+                dateInput.classList.add('edit-input')
+
+                // Replace span with input
+                e.target.replaceWith(dateInput)
+                dateInput.focus()
+
+                // Save on blur
+                dateInput.addEventListener('blur', () => {
+                    if (dateInput.value) {
+                        appLogic.updateTodoDetails(todoId, projectId, {
+                            dueDate: dateInput.value,
+                        })
+                    }
+                    const activeProject = appLogic.findProject(projectId)
+                    uiRender.renderActiveProject(activeProject)
+                })
+                return
+            }
+
+            // 5. Handle Title/Description Edit (In-Place) 📝
+            if (
+                e.target.classList.contains('todo-title-text') ||
+                e.target.classList.contains('todo-description-text')
+            ) {
+                const field = e.target.dataset.key // 'title' or 'description'
+                const currentText = e.target.innerText
+
+                // Create Input Element
+                const input =
+                    field === 'description'
+                        ? document.createElement('textarea')
+                        : document.createElement('input')
+
+                if (field !== 'description') input.type = 'text'
+
+                input.value = currentText
+                input.classList.add('edit-input')
+
+                // Replace text with input
+                e.target.replaceWith(input)
+                input.focus()
+
+                // Define save logic
+                const save = () => {
+                    const newValue = input.value.trim()
+                    if (newValue && newValue !== currentText) {
+                        appLogic.updateTodoDetails(todoId, projectId, {
+                            [field]: newValue, // Dynamic key: title or description
+                        })
+                    }
+                    const activeProject = appLogic.findProject(projectId)
+                    uiRender.renderActiveProject(activeProject)
+                }
+
+                // Save on blur (clicking away)
+                input.addEventListener('blur', save)
+
+                // Save on Enter (only for title inputs, allow newlines in description)
+                input.addEventListener('keydown', (k) => {
+                    if (k.key === 'Enter' && field !== 'description') {
+                        input.blur() // Triggers the blur event above
+                    }
+                })
+            }
+        })
     }
 
     function bindSidebarEvents() {

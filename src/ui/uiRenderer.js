@@ -57,18 +57,24 @@ const uiRender = (() => {
     <div class='todo-card ${completionClass}' data-todo-id='${todo.id}'>
         <div class='todo-info-group'>
             <div class='todo-text'>
-                <h4 class='todo-title-text'>${todo.title}</h4>
-                <p class='text-secondary todo-description-text'>${todo.description || ''}</p>
+                <h4 class='todo-title-text' data-key='title'>${todo.title}</h4>
+                <p class='text-secondary todo-description-text' data-key='description'>${todo.description || 'No description'}</p>
             </div>
             <div class='todo-meta'>
-                <span class='priority-tag priority-${todo._priority}'>${todo._priority}</span>
-                <span class='due-date'>${format(new Date(todo.dueDate), 'MMM dd')}</span>
+                <span class='priority-tag priority-${todo._priority}' data-priority='${todo._priority}'>${todo._priority}</span>
+                <span class='due-date' data-raw-date='${todo.dueDate}'>${format(new Date(todo.dueDate), 'MMM dd')}</span>
             </div>
         </div>
         
-        <div class='todo-checkbox-group'>
-            <label for='todo-checkbox-${todo.id}' class='checkbox-label'>Done</label>
-            <input type='checkbox' id='todo-checkbox-${todo.id}' class='todo-checkbox' data-id='${todo.id}' ${todo._isComplete ? 'checked' : ''}>
+        <div class='todo-actions-group'>
+            <div class='todo-checkbox-group'>
+                <label for='todo-checkbox-${todo.id}' class='checkbox-label'>Done</label>
+                <input type='checkbox' id='todo-checkbox-${todo.id}' class='todo-checkbox' data-id='${todo.id}' ${todo._isComplete ? 'checked' : ''}>
+            </div>
+            <button class='btn-delete' data-id='${todo.id}' aria-label='Delete Task'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="20px" fill="#64748b">
+                <title>Delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
+            </button>
         </div>
     </div>
 `
