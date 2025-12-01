@@ -1,91 +1,104 @@
-# 🏗️ Todo List Application: Development Map
+# 🏗️ TaskMaster: A Comprehensive Todo List Application
 
-## Phase 1: Setup & Environment ⚙️
+TaskMaster is a dynamic, responsive, and persistent Todo List application built with vanilla JavaScript, Webpack, and modern CSS. It features a modular architecture, robust data handling, and a polished user interface with dark mode support.
 
-**Goal:** Get the tools ready and the file structure in place.
+## 🌟 Features
 
-1. [x] **Initialize Project:** Run `npm init` to create `package.json`.
-2. [x] **Install Webpack:** Install `webpack` and `webpack-cli` as dev dependencies.
-3. [x] **Install Dependencies:** Install `date-fns` for date manipulation.
-4. [x] **File Structure:** Create `src` and `dist` directories.
-    - Create `src/index.html` (Skeleton HTML).
-    - Create `src/index.js` (Entry point).
-    - Create `src/style.css` (Basic styling).
+### Core Functionality
 
-## Phase 2: The Logic Layer (The "Model") 🧠
+- **Project Management:** Create, read, update, and delete (CRUD) projects.
+- **Task Management:** Add tasks with titles, descriptions, due dates, and priority levels.
+- **Data Persistence:** All data is saved to the browser's `localStorage`, ensuring your tasks survive page reloads.
+- **Smart Rehydration:** Automatically restores complex Class objects (Projects and Todos) from JSON data.
 
-**Goal:** Build the engine. This code is independent of the DOM.
+### User Interface & Experience
 
-1. [x] **`todo.js`:** Create the `Todo` class (with `id`, `title`, `description`, `dueDate`, `priority`, etc.).
-2. [x] **`project.js`:** Create the `Project` class (with `id`, `name`, and an array of `todos`).
-3. [x] **`appLogic.js` (The Manager):**
-    - Manage the master array of Projects.
-    * **Project Management** 📁
-        - `addProject(name, description)`
-        - `getProjects()`
-        - `removeProject(projectId)`
-        - `updateProjectDetails(projectId, newDetails)`
-    * **Todo Coordination** 📝
-        - `addTodo(projectId, title, description, dueDate, priority)`
-        - `removeTodo(todoId, projectId)`
-        - `updateTodoDetails(todoId, projectId, newDetails)`
-    * **Data Persistence** 💾
-        - `initializeAppData()`
-        - `saveAppData()`
-    - **Test:** Use `console.log` in `index.js` to verify data structure before building the UI.
+- **Responsive Design:** A mobile-first layout with a collapsible sidebar on mobile and a permanent sidebar on desktop.
+- **Dark/Light Mode:** A fully persistent theme toggle that remembers your preference and prevents flashing on load.
+- **In-Place Editing:** Click directly on task titles, descriptions, or dates to edit them instantly without opening a form.
+- **Rich Modals:** Detailed views for tasks with expanded information and edit capabilities.
+- **Interactive Elements:**
+    - Priority cycling (Low -> Medium -> High) by clicking the tag.
+    - Checkbox completion with strikethrough effects.
+    - Safe deletion prompts for projects with active tasks.
 
-## 🖼️ Phase 3: The Interface Layer (The "View")
+---
 
-**Goal:** Create a visual layout, define rendering functions, and establish a clear separation of concerns between the DOM and the `AppLogic` Module. All rendering and event binding happens here; all data mutation must be delegated to `appLogic`.
+## 🗺️ Development Map
 
-### 1. HTML Structure Update (`src/index.html`) 🏗️
+### Phase 1: Setup & Environment ⚙️
 
-- [x] We need to create the main containers that Webpack will load and where `domController.js` will inject all the dynamic content.
+- [x] **Initialize Project:** Run `npm init` to create `package.json`.
+- [x] **Install Webpack:** Install `webpack` and `webpack-cli` as dev dependencies.
+- [x] **Install Dependencies:** Install `date-fns` for date manipulation.
+- [x] **File Structure:** Set up `src` and `dist` directories with entry points.
 
-| Component              | Element ID       | Purpose                                                                                         |
-| :--------------------- | :--------------- | :---------------------------------------------------------------------------------------------- |
-| **Main App Container** | `#app-container` | The primary container for the entire application (used for layout, e.g., Flexbox).              |
-| **Projects Sidebar**   | `#sidebar`       | Container for the list of projects, default views (like "Today"), and the "Add Project" button. |
-| **Main Content**       | `#main-content`  | Container for the header of the active project and the list of its todo tasks.                  |
-| **Modal Overlay**      | `#modal-overlay` | A separate, hidden container that will display forms (Add/Edit Todo) over the main content.     |
+### Phase 2: The Logic Layer (The "Model") 🧠
 
-### 2. DOM Controller Functions (`src/domController.js`) 🧠
+- [x] **Core Classes:** Created `Todo` and `Project` classes.
+- [x] **AppLogic:** Implemented the "Manager" module to handle data operations (add, remove, update).
+- [x] **Persistence:** Built a robust `storage.js` module to handle JSON serialization and class rehydration.
 
-- [x] This module exports functions that handle every aspect of the UI. It relies entirely on the `appLogic` module for data.
+### Phase 3: The Interface Layer (The "View") 🖼️
 
-| Category           | Function Name                  | Responsibility                                                                                                                                              |
-| :----------------- | :----------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Initialization** | `initializeInterface()`        | A single entry point that: 1) Gets projects from `appLogic`, 2) Calls `renderProjectsSidebar()`, and 3) Calls `renderActiveProject()` for the default view. |
-| **Rendering**      | `renderProjectsSidebar()`      | Fetches the full project list from `appLogic.getProjects()` and generates clickable HTML elements for each project in `#sidebar`.                           |
-|                    | `renderActiveProject(project)` | Takes a specific project object, clears `#main-content`, renders the project's header, and calls `renderTodos()` for its tasks.                             |
-|                    | `renderTodos(todos)`           | Iterates through a list of tasks and generates the HTML card/markup for each task in the `#main-content` area.                                              |
-| **Forms/Modals**   | `showTodoForm(projectId)`      | Clears and displays the form HTML in the `#modal-overlay` for adding a new task to the specified project.                                                   |
-|                    | `showProjectForm()`            | Clears and displays the form HTML for adding/editing a project in the `#modal-overlay`.                                                                     |
+- [x] **DOM Structure:** Established a clean `index.html` skeleton.
+- [x] **UI Renderer:** Created a dedicated module to render the Sidebar, Project Header, and Todo Cards.
+- [x] **Modal Manager:** Built dynamic forms for adding projects and tasks.
 
-## Phase 4: Wiring & Interaction (The "Controller") 🔌
+### Phase 4: Wiring & Interaction (The "Controller") 🔌
 
-**Goal:** Connect the Logic to the Interface.
+- [x] **Event Handling:** Centralized event listeners in `eventHandler.js` to bridge the UI and Logic.
+- [x] **Dynamic Binding:** Implemented logic to bind events to dynamically created elements (like new cards).
+- [x] **In-Place Editing:** Added "click-to-edit" functionality for seamless updates.
 
-1. [x] **Event Listeners:** Set up event handlers on dynamically generated buttons (Add, Delete, Edit, Select Project).
-2. [x] **Orchestration:** Event handlers call Logic methods and then call DOM rendering methods to refresh the UI.
+### Phase 5: Persistence & Polish ✨
 
-    ### Event Handling and Orchestration 🔌
+- [x] **Storage Module:** Implemented `saveToLocal` and `loadFromLocal` with error handling.
+- [x] **Date Integration:** Used `date-fns` to format ISO dates into human-readable strings.
+- [x] **Styling:** Applied CSS variables, responsiveness, and a polished color palette.
+- [x] **Dark Mode:** Implemented a toggle with persistent storage and flash-prevention logic.
 
-    All events attached to the DOM must call the Manager methods to change the underlying data, ensuring the view never modifies the Model directly.
+---
 
-    | User Action            | DOM Controller Task                                                       | AppLogic Call                            |
-    | :--------------------- | :------------------------------------------------------------------------ | :--------------------------------------- |
-    | **Click Project Name** | Call `initializeInterface()` to refresh the UI with the selected project. | (Implicit in update)                     |
-    | **Submit New Todo**    | Read form data, close modal.                                              | `appLogic.addTodo(...)`                  |
-    | **Click Delete Todo**  | Identify `todoId` and `projectId`.                                        | `appLogic.removeTodo(todoId, projectId)` |
-    | **Submit Edit Todo**   | Read form data, close modal.                                              | `appLogic.updateTodoDetails(...)`        |
+## 🎓 Learnings
 
-## Phase 5: Persistence & Polish ✨
+This project was a deep dive into modern JavaScript architecture, tooling, and workflow automation.
 
-**Goal:** Save data and refine the UI.
+### 1. Modular Architecture (Splitting Modules)
 
-1. [x] **`storage.js`:**
-    - `saveToLocal(data)`: Serializes the Logic data to JSON.
-    - `loadFromLocal()`: Parses JSON and **rehydrates** the data back into class instances.
-2. [ ] **Date Integration:** Use `date-fns` to format due dates nicely.
-3. [ ] **UI Polish:** CSS styling and final accessibility checks.
+We learned to avoid monolithic code files by splitting responsibilities to adhere to the **Single Responsibility Principle**:
+
+- **`uiRenderer.js`**: Handles HTML generation and DOM updates.
+- **`modalManager.js`**: Manages pop-up forms and details views.
+- **`eventHandler.js`**: Centralizes user interaction logic, bridging the "View" and "Model."
+
+### 2. Advanced Webpack Configuration
+
+We moved beyond a basic setup to a professional, environment-specific configuration:
+
+- **Config Splitting:** Separated configuration into `webpack.common.js` (shared rules/plugins), `webpack.dev.js` (devServer, source maps), and `webpack.prod.js` (optimization). Used `webpack-merge` to combine them.
+- **CSS Extraction:** Switched from `style-loader` to **`MiniCssExtractPlugin`** to extract CSS into a separate file. This loads styles in parallel with HTML, preventing the "Flash of Unstyled Content" (FOUC).
+
+### 3. Code Quality & Workflow Automation
+
+We enforced code quality and standardized commits using a robust toolchain:
+
+- **ESLint & Prettier:** Configured to catch errors and enforce consistent formatting automatically.
+- **Husky & Lint-Staged:** Set up git hooks to run linters only on changed files (`pre-commit`) before allowing a commit.
+- **Commitlint & Gitmoji:** Enforced conventional commit messages (e.g., "feat: ...", "fix: ...") using the `gitmoji` preset for semantic and expressive history.
+
+### 4. Deployment Strategy
+
+We automated the deployment process using the **`gh-pages`** package:
+
+- Created a `deploy` script in `package.json` to push the contents of the `dist` folder directly to a `gh-pages` branch.
+- This allows for one-command updates to the live site hosted on GitHub Pages.
+
+### 5. User Interface Patterns
+
+- **In-Place Editing:** Implemented seamless editing by swapping text elements with input fields on click, saving automatically on `blur` (clicking away).
+- **Dark Mode:** Created a persistent theme toggle that synchronizes across multiple buttons (mobile/desktop) and uses a blocking script in `index.html` to apply the theme before the first paint.
+
+### 6. External Libraries
+
+- **`date-fns`:** Integrated a lightweight library to parse and format dates (`format(new Date(isoString), 'MMM dd')`), avoiding the overhead of larger libraries while simplifying date logic.
